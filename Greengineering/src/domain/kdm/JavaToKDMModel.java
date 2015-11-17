@@ -31,8 +31,7 @@ public class JavaToKDMModel extends DiscoverKDMModelFromJavaProject{
 		}
 		
 	}
-	//Proyectos no java, no funciona
-	/*public static void javatoKDMM (IProject project, String savePath) throws DiscoveryException{
+		/*public static void javatoKDMM (IProject project, String savePath) throws DiscoveryException{
 		try{
 			DiscoverKDMModelFromProject disco = new DiscoverKDMModelFromProject();
 			disco.discoverElement(project, new NullProgressMonitor());
