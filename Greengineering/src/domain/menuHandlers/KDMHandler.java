@@ -38,7 +38,7 @@ public class KDMHandler implements IHandler {
 		IProject newProject = ResourcesPlugin.getWorkspace().getRoot().getProject(nameProject);
 				
 		try {
-			JavaToKDMModel.javatoKDMM(newProject,ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\KDM Model\\LS_KDMModel.xmi");
+			JavaToKDMModel.javatoKDMM(newProject,ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Grey KDM\\LS_KDMModel.xmi");
 			DataManagement.getInstance().refreshProject(nameProject);
 		} catch (DiscoveryException | CoreException e) {
 			// TODO Auto-generated catch block

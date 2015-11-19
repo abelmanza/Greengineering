@@ -10,12 +10,11 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.modisco.infra.discovery.core.exception.DiscoveryException;
 import org.eclipse.modisco.java.discoverer.DiscoverKDMModelFromJavaProject;
-import org.eclipse.modisco.java.discoverer.DiscoverKDMModelFromProject;
 
 
 
-public class JavaToKDMModel extends DiscoverKDMModelFromJavaProject{
-	
+public class JavaToKDMModel{
+	// habia un extends de la clase de modisco
 
 	public static void javatoKDMM (IProject project, String savePath) throws DiscoveryException{
 		try{

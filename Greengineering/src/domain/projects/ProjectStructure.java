@@ -24,7 +24,8 @@ public class ProjectStructure {
 	        String[] paths = {
 	                "Bad-Smells Instances/God Class", //$NON-NLS-1$
 	                "Bad-Smells Instances/Long Method",
-	                "KDM Model", //$NON-NLS-1$
+	                "Grey KDM",
+	                "Green KDM",//$NON-NLS-1$
 	                "Legacy System"}; //$NON-NLS-1$
 	        addToProjectStructure(project, paths);
 	    } catch (CoreException e) {
