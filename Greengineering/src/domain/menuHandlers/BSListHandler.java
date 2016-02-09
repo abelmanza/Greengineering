@@ -9,6 +9,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import domain.transformationm2m.*;
+
 public class BSListHandler implements IHandler {
 
 	@Override
@@ -30,6 +32,10 @@ public class BSListHandler implements IHandler {
 				window.getShell(),
 				"Greengineering",
 				"Manage BS List");
+		
+		//m2mgetset.doTransformation();
+		//pruebaTransformacion.launchTransformation();
+		ATLLauncher.doTransformation();
 
 		return null;
 	}
