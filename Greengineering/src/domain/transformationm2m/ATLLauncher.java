@@ -30,20 +30,21 @@ import org.eclipse.m2m.atl.emftvm.util.TimingData;
 public class ATLLauncher {
 	
 	// Some constants for quick initialization and testing.
-	public final static String IN_METAMODEL_NAME = "MM";
 	
-	public final static String IN_MODEL ="file:///"+ResourcesPlugin.getWorkspace().getRoot().getLocation()+"/PruebaTransformacion/Grey KDM/PruebaATL_kdm.xmi";
-	public final static String OUT_MODEL = "file:///"+ResourcesPlugin.getWorkspace().getRoot().getLocation()+"/PruebaTransformacion/Green KDM/TransEjemplo.xmi";
-	
-	public final static String TRANSFORMATION_DIR = "file:///"+ResourcesPlugin.getWorkspace().getRoot().getLocation()+"/Resources/transformations/";
-	public final static String TRANSFORMATION_MODULE= "GenerarGetSet";
 	
 	// The input and output metamodel nsURIs are resolved using lazy registration of metamodels, see below.
 	private String inputMetamodelNsURI;
 	private String outputMetamodelNsURI;
 	
 	//Main transformation launch method
-	public void launch(){
+	public void launch(String nameProject){
+		String IN_METAMODEL_NAME = "MM";
+		
+		String IN_MODEL ="file:///"+ResourcesPlugin.getWorkspace().getRoot().getLocation()+"/"+nameProject+"/Grey KDM/PruebaATL_kdm.xmi";
+		String OUT_MODEL = "file:///"+ResourcesPlugin.getWorkspace().getRoot().getLocation()+"/"+nameProject+"/Green KDM/TransEjemplo.xmi";
+		
+		String TRANSFORMATION_DIR = "file:///"+ResourcesPlugin.getWorkspace().getRoot().getLocation()+"/Resources/transformations/";
+		String TRANSFORMATION_MODULE= "GenerarGetSet";
 		
 		/* 
 		 * Creates the execution environment where the transformation is going to be executed,
@@ -88,7 +89,7 @@ public class ATLLauncher {
 		 */
 		
 		ModuleResolver mr = new DefaultModuleResolver(TRANSFORMATION_DIR, rs);
-		System.out.println("sou o MR " +mr);
+
 		TimingData td = new TimingData();
 		env.loadModule(mr, TRANSFORMATION_MODULE);
 		td.finishLoading();
@@ -153,8 +154,8 @@ public class ATLLauncher {
 	 *  A test main method, I'm using constants so I can quickly change the case study by simply
 	 *  modifying the header of the class.
 	 */	
-	public static void doTransformation(){
+	public static void doTransformation(String nameProject){
 		ATLLauncher l = new ATLLauncher();
-		l.launch();
+		l.launch(nameProject);
 	}
 }
