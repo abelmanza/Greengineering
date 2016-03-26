@@ -1,5 +1,7 @@
 package domain.menuHandlers;
 
+import java.io.File;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
@@ -13,6 +15,7 @@ import org.eclipse.modisco.infra.discovery.core.exception.DiscoveryException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import domain.kdm.*;
+import domain.transformationm2m.*;
 import persistence.DataManagement;
 
 public class KDMHandler implements IHandler {
@@ -39,6 +42,8 @@ public class KDMHandler implements IHandler {
 				
 		try {
 			JavaToKDMModel.javatoKDMM(newProject,ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Grey KDM\\LS_KDMModel.xmi");
+			File xmlFile = new File(ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Grey KDM\\LS_KDMModel.xmi");
+			AddExtensionFamily.crearExtensionFamily(xmlFile, nameProject);
 			DataManagement.getInstance().refreshProject(nameProject);
 		} catch (DiscoveryException | CoreException e) {
 			// TODO Auto-generated catch block

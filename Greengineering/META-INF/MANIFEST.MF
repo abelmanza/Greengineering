@@ -18,9 +18,15 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.m2m.atl.core;bundle-version="3.6.0",
  org.eclipse.m2m.atl.engine.emfvm.launch;bundle-version="3.6.0",
  org.eclipse.m2m.atl.emftvm;bundle-version="3.6.0",
- org.objectweb.asm;bundle-version="3.3.1"
+ org.objectweb.asm;bundle-version="3.3.1",
+ org.jdom;bundle-version="1.1.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/dom4j-1.6.1.jar,
  lib/jaxen-1.1-beta-6.jar,
- .
+ .,
+ lib/jdom-2.0.6-contrib.jar,
+ lib/jdom-2.0.6-javadoc.jar,
+ lib/jdom-2.0.6-junit.jar,
+ lib/jdom-2.0.6-sources.jar,
+ lib/jdom-2.0.6.jar

@@ -44,7 +44,7 @@ public class ATLLauncher {
 		String OUT_MODEL = "file:///"+ResourcesPlugin.getWorkspace().getRoot().getLocation()+"/"+nameProject+"/Green KDM/TransEjemplo.xmi";
 		
 		String TRANSFORMATION_DIR = "file:///"+ResourcesPlugin.getWorkspace().getRoot().getLocation()+"/Resources/transformations/";
-		String TRANSFORMATION_MODULE= "GenerarGetSet";
+		String TRANSFORMATION_MODULE= "pruebas";
 		
 		/* 
 		 * Creates the execution environment where the transformation is going to be executed,
