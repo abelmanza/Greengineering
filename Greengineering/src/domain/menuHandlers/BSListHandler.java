@@ -14,6 +14,8 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 import persistence.DataManagement;
 import domain.transformationm2m.*;
+import views.BSManagement;
+import views.ImportBS;
 
 public class BSListHandler implements IHandler {
 	private IStructuredSelection selection=null;
@@ -32,11 +34,7 @@ public class BSListHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-		MessageDialog.openInformation(
-				window.getShell(),
-				"Greengineering",
-				"Manage BS List");
+		/*IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		
 		//m2mgetset.doTransformation();
 		//pruebaTransformacion.launchTransformation();
@@ -52,8 +50,11 @@ public class BSListHandler implements IHandler {
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
+		}*/
+		
+		BSManagement bsm = new BSManagement();
+		bsm.open();
+		
 		return null;
 	}
 
