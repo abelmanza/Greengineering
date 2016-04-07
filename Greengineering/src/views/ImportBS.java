@@ -1,6 +1,9 @@
 package views;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
+import java.io.IOException;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -77,7 +80,16 @@ public class ImportBS {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String plugdir = text.getText();
-				//Move to the plugin eclipse folder
+				String targetdir = Platform.getInstallLocation().getURL().toString()+"dropins/";
+				targetdir = targetdir.substring(6);
+				System.out.println(targetdir);
+				try {
+					DataManagement.getInstance().loadFolder(plugdir,targetdir);
+				} catch (IllegalStateException | IOException | CoreException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				shlImportBadsmellPlugin.dispose();
 			}
 		});
 		btnAcept.setBounds(212, 127, 75, 25);
