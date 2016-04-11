@@ -37,17 +37,10 @@ public class AddExtensionFamily {
 			Element stereotype = new Element("stereotype");
 			stereotype.addNamespaceDeclaration(xmi);
 			//extensionFamily.addNamespaceDeclaration(kdm);
-			stereotype.setAttribute(new Attribute("name","Checked Method"));
+			stereotype.setAttribute(new Attribute("name","Checked Class"));
 			stereotype.setAttribute("id", "id.1", xmi);
 			extensionFamily.addContent(stereotype);
 			
-			//Stereotype 2
-			Element stereotype1 = new Element("stereotype");
-			stereotype1.addNamespaceDeclaration(xmi);
-			//extensionFamily.addNamespaceDeclaration(kdm);
-			stereotype1.setAttribute(new Attribute("name","Check God Class"));
-			stereotype1.setAttribute("id", "id.2", xmi);
-			extensionFamily.addContent(stereotype1);
 			
 			rootNode.addContent(1,extensionFamily);
 
@@ -55,7 +48,7 @@ public class AddExtensionFamily {
 			XMLOutputter xmlOutput = new XMLOutputter();
 	        // display ml
 	        xmlOutput.setFormat(Format.getPrettyFormat());
-	        xmlOutput.output(document, new FileWriter(ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Grey KDM\\LS_KDMModelEXT.xmi")); 
+	        xmlOutput.output(document, new FileWriter(ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Grey KDM\\LS_KDMModel.xmi")); 
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

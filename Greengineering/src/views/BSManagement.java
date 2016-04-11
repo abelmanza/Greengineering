@@ -52,7 +52,6 @@ public class BSManagement {
 		ArrayList array = new ArrayList();
 		String path = Platform.getInstallLocation().getURL().toString()+"dropins/plugins/";
 		path = path.substring(6);
-		System.out.println(path);
 		array = DataManagement.getInstance().getAllFiles(path, "jar");
 		
 		for(int i = 0; i<array.size();i++){
@@ -68,9 +67,8 @@ public class BSManagement {
 		shlBadsmellManagement = new Shell();
 		shlBadsmellManagement.setSize(445, 311);
 		shlBadsmellManagement.setText("Bad-Smell Management");
-		ArrayList array = new ArrayList();
 		
-		List list = new List(shlBadsmellManagement, SWT.BORDER);
+		final List list = new List(shlBadsmellManagement, SWT.BORDER);
 		list.setBounds(10, 10, 328, 224);
 		fillList(list);
 		
@@ -79,6 +77,7 @@ public class BSManagement {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ImportBS imp = new ImportBS();
+				shlBadsmellManagement.close();
 				imp.open();
 			}
 		});
@@ -86,23 +85,26 @@ public class BSManagement {
 		btnAdd.setText("Add");
 		
 		Button btnDelete = new Button(shlBadsmellManagement, SWT.NONE);
-		btnDelete.setBounds(344, 41, 75, 25);
-		btnDelete.setText("Delete");
-		
-		Button btnApply = new Button(shlBadsmellManagement, SWT.NONE);
-		btnApply.addSelectionListener(new SelectionAdapter() {
+		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				String path = Platform.getInstallLocation().getURL().toString()+"dropins/plugins/";
+				path = path.substring(6);
+				String element = list.getItem(list.getSelectionIndex());
+				File f = new File (path+element);
+				f.delete();
+				list.remove(element);
+
 			}
 		});
-		btnApply.setBounds(10, 238, 89, 25);
-		btnApply.setText("Apply selected");
+		btnDelete.setBounds(344, 41, 75, 25);
+		btnDelete.setText("Delete");
 		
 		Button btnCancel = new Button(shlBadsmellManagement, SWT.NONE);
 		btnCancel.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				shlBadsmellManagement.dispose();
+				shlBadsmellManagement.close();
 			}
 		});
 		btnCancel.setBounds(344, 239, 75, 25);

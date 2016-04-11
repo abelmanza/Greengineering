@@ -89,7 +89,9 @@ public class ImportBS {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				BSManagement bsm = new BSManagement();
 				shlImportBadsmellPlugin.dispose();
+				bsm.open();
 			}
 		});
 		btnAcept.setBounds(212, 127, 75, 25);
@@ -100,6 +102,8 @@ public class ImportBS {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				shlImportBadsmellPlugin.dispose();
+				BSManagement bsm = new BSManagement();
+				bsm.open();
 			}
 		});
 		btnCancel.setBounds(296, 127, 75, 25);

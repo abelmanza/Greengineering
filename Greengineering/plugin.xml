@@ -40,11 +40,6 @@
                   mnemonic="S">
             </command>
             <command
-                  commandId="Greengineering.commands.sampleCommand1"
-                  id="Greengineering.menus.sampleCommand1"
-                  mnemonic="S">
-            </command>
-            <command
                   commandId="Greengineering.commands.sampleCommand2"
                   id="Greengineering.menus.sampleCommand2"
                   mnemonic="S">
@@ -54,6 +49,11 @@
                   id="Greengineering.menus.sampleCommand3"
                   mnemonic="S">
             </command>
+            <menu
+                  id="Greengineering.menu.appBS"
+                  label="Apply Bad Smell"
+                  mnemonic="M1">
+            </menu>
          </menu>
       </menuContribution>
       <menuContribution
@@ -82,15 +82,6 @@
             id="Greengineering.commands.sampleCommand"
             name="Import legacy system">
       </command>
-      <command
-            categoryId="Greengineering.commands.category1"
-            id="Greengineering.commands.sampleCommand1"
-            name="Search for bad smells">
-      </command>
-      <category
-            id="Greengineering.commands.category1"
-            name="Sample Category 1">
-      </category>
       <command
             categoryId="Greengineering.commands.category2"
             defaultHandler="domain.menuHandlers.KDMHandler"
