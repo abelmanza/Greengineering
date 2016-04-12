@@ -2,6 +2,7 @@ package domain.menuHandlers;
 
 import java.io.File;
 
+import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
@@ -18,21 +19,14 @@ import domain.kdm.*;
 import domain.transformationm2m.*;
 import persistence.DataManagement;
 
-public class KDMHandler implements IHandler {
+public class KDMHandler extends AbstractHandler {
 	private IStructuredSelection selection=null;
 	private String nameProject = "";
-	@Override
-	public void addHandlerListener(IHandlerListener handlerListener) {
-		// TODO Auto-generated method stub
+	
+	public KDMHandler(){
+		
 	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
+	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		ISelection sel = HandlerUtil.getCurrentSelection(event);
@@ -52,22 +46,6 @@ public class KDMHandler implements IHandler {
 		return null;
 	}
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isHandled() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void removeHandlerListener(IHandlerListener handlerListener) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }
