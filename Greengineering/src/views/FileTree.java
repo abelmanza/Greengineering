@@ -1,35 +1,23 @@
 package views;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.w3c.dom.NamedNodeMap;
@@ -226,24 +214,22 @@ class FileTreeLabelProvider implements ILabelProvider {
     	NamedNodeMap attributes = ((Node) element).getAttributes();
     	int attributeCount = attributes.getLength();
     	Image image = null;
+    	if(((Node) element).getNodeName().equals("Class")){
+    		image = file;
+    	}
+    	else if(((Node) element).getNodeName().equals("Package")){
+			image = pack;
+		}else if(((Node) element).getNodeName().equals("Method")){
+			image = method;
+		}else if(((Node) element).getNodeName().equals("Attribute")){
+			image = storable;
+		}
+		else{
+			image = dir;
+		}
     	for(int i = 0; i<attributeCount;i++){
     		Node attributeNode = attributes.item(i);
     		
-    		if(attributeNode.getNodeName().equals("xsi:type")){
-    			if(attributeNode.getNodeValue().equals("code:ClassUnit")){
-    				image = file;
-    			}
-    			else if(attributeNode.getNodeValue().equals("code:Package")){
-    				image = pack;
-    			}else if(attributeNode.getNodeValue().equals("code:MethodUnit")){
-    				image = method;
-    			}else if(attributeNode.getNodeValue().equals("code:StorableUnit")){
-    				image = storable;
-    			}
-    			else{
-    				image = dir;
-    			}
-    		}//stereotype="id.1"
     		if(attributeNode.getNodeName().equals("stereotype") && attributeNode.getNodeValue().equals("id.1")){
     			return marked;
     		}
