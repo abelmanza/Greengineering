@@ -14,7 +14,6 @@ import org.eclipse.modisco.java.discoverer.DiscoverKDMModelFromJavaProject;
 
 
 public class JavaToKDMModel{
-	// habia un extends de la clase de modisco
 
 	public static void javatoKDMM (IProject project, String savePath) throws DiscoveryException{
 		try{

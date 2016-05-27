@@ -133,8 +133,7 @@ class FileTreeContentProvider implements ITreeContentProvider {
              if (null != currentNode
                      && Node.TEXT_NODE == currentNode.getNodeType()
                      && "".equals(currentNode.getNodeValue().trim())) {
-                 System.out.println("Skip empty textnode:"
-                         + currentNode.getNodeName());
+                 
                  continue;
              }
              nodes.add(currentNode);
@@ -230,7 +229,7 @@ class FileTreeLabelProvider implements ILabelProvider {
     	for(int i = 0; i<attributeCount;i++){
     		Node attributeNode = attributes.item(i);
     		
-    		if(attributeNode.getNodeName().equals("stereotype") && attributeNode.getNodeValue().equals("id.1")){
+    		if(attributeNode.getNodeName().equals("stereotype")){
     			return marked;
     		}
     	}
@@ -258,7 +257,7 @@ class FileTreeLabelProvider implements ILabelProvider {
             for (int i = 0; i < attributeCount; i++) {
                 Node attributeNode = attributes.item(i);
                 if(attributeNode.getNodeName().equals("name") || attributeNode.getNodeName().equals("xsi:type")){
-                    elementRepresentation.append(" ");
+                    elementRepresentation.append(" -> ");
                     elementRepresentation.append(attributeNode
                             .getNodeValue());
                     elementRepresentation.append(" ");

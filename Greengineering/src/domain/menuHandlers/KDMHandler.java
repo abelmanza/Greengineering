@@ -33,9 +33,25 @@ public class KDMHandler extends AbstractHandler {
 		selection = (IStructuredSelection) sel;
 		nameProject=DataManagement.getNameProject(selection.getFirstElement());
 		IProject newProject = ResourcesPlugin.getWorkspace().getRoot().getProject(nameProject);
-				
+		IProject [] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+		IProject insideProject = null;
+		for (int i = 0; i < projects.length; i++) {
+			if(newProject.getFolder("Legacy System").getFolder(projects[i].getName()).getName().equalsIgnoreCase(projects[i].getName())){
+				insideProject = projects[i];
+			}
+		}
+		if (newProject.exists() && !newProject.isOpen())
+			try {
+				newProject.open(null);
+			} catch (CoreException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+		//IProject insideProject = newProject.getFolder("Legacy System").getFolder(name)
+		
 		try {
-			JavaToKDMModel.javatoKDMM(newProject,ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Grey KDM\\LS_KDMModel.xmi");
+			JavaToKDMModel.javatoKDMM(insideProject,ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Grey KDM\\LS_KDMModel.xmi");
 			File xmlFile = new File(ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Grey KDM\\LS_KDMModel.xmi");
 			AddExtensionFamily.crearExtensionFamily(xmlFile, nameProject);
 			DataManagement.getInstance().refreshProject(nameProject);
