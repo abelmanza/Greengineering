@@ -22,9 +22,8 @@ public class ProjectStructure {
 	        addNature(project);
 	 
 	        String[] paths = {
-	                "Grey KDM",
+	                "Source KDM",
 	                "Bad-Smell detected KDM",
-	                "Green KDM",//$NON-NLS-1$
 	                "Legacy System"}; //$NON-NLS-1$
 	        addToProjectStructure(project, paths);
 	    } catch (CoreException e) {

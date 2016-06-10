@@ -65,7 +65,7 @@ public class AddExtensionFamily {
 			format.setEncoding("ASCII");
 	        // display ml
 	        xmlOutput.setFormat(format);
-	        xmlOutput.output(document, new FileWriter(ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Grey KDM\\LS_KDMModel.xmi")); 
+	        xmlOutput.output(document, new FileWriter(ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Source KDM\\LS_KDMModel.xmi")); 
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

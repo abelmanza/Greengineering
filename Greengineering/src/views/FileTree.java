@@ -1,13 +1,75 @@
 package views;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -19,10 +81,20 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.widgets.Tree;
 
 /**
  * This class demonstrates TreeViewer. It shows the drives, directories, and
@@ -60,6 +132,12 @@ public class FileTree extends ApplicationWindow {
    *            the shell
    */
   protected void configureShell(Shell shell) {
+  	shell.addMouseListener(new MouseAdapter() {
+  		@Override
+  		public void mouseDoubleClick(MouseEvent e) {
+  			
+  		}
+  	});
     super.configureShell(shell);
 
     // Set the title bar text and the size
@@ -80,6 +158,63 @@ public class FileTree extends ApplicationWindow {
 
     // Create the tree viewer to display the file tree
     final TreeViewer tv = new TreeViewer(composite);
+    Tree tree = tv.getTree();
+    tree.addMouseListener(new MouseAdapter() {
+    	@Override
+    	
+    	public void mouseDoubleClick(MouseEvent e) {
+    		System.out.println("Mouse Double click.");
+    		TreeItem [] t = tv.getTree().getSelection();
+    		String [] st= t[0].getText().split(" ");
+    		String name = st[st.length-1];
+    		String type = st[1];
+    		String pName = "";
+    		String hName = ""; 
+    		
+    		IProject [] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+    		for (int i = 0; i < projects.length; i++) {
+    			if(projects[i].getFolder("Legacy System").exists()){
+    				pName = projects[i].getName();
+    				
+    			}
+    		}
+    		IProject newProject = ResourcesPlugin.getWorkspace().getRoot().getProject(pName);
+    		for (int i = 0; i < projects.length; i++) {
+    			if(newProject.getFolder("Legacy System").getFolder(projects[i].getName()).getName().equalsIgnoreCase(projects[i].getName())){
+    				
+    				hName = newProject.getFolder("Legacy System").getFolder(projects[i].getName()).getName();
+    				char[] caracteres = hName.toCharArray();
+    				caracteres[0] = Character.toUpperCase(caracteres[0]);
+    				for (int j = 0; j < hName.length()- 2; j++) 
+    				    if (caracteres[j] == ' ' || caracteres[j] == '.' || caracteres[j] == ',' || caracteres[j] == '_')
+    				      caracteres[j + 1] = Character.toUpperCase(caracteres[j + 1]);
+    				
+    				hName = new String(caracteres);
+    			}
+    		}
+    		
+    		int nLine = returnNumberLine(type, name);
+    		System.out.println(nLine);
+    		
+    		
+    		
+    		String filePath =ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+pName+"\\Legacy System\\"+hName+"\\src\\"+name+".java";
+    		final IFile inputFile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(Path.fromOSString(filePath));
+    		if (inputFile != null) {
+    		    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+    		    try {
+					IEditorPart openEditor = IDE.openEditor(page, inputFile);
+					navigateToLine(inputFile, nLine, page);
+					
+				} catch (PartInitException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+    		}
+
+
+    	}
+    });
     tv.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
     tv.setContentProvider(new FileTreeContentProvider());
     tv.setLabelProvider(new FileTreeLabelProvider());
@@ -90,6 +225,62 @@ public class FileTree extends ApplicationWindow {
     return composite;
   }
 
+  
+  public static int returnNumberLine(String type, String name){
+	  int nLine = 0;
+	  String nType = "";
+	  FileInputStream data;
+	  if(type.equals("Class")){
+		  nType = "code:ClassUnit";
+	  } else if(type.equals("Method")){
+		  nType = "code:MethodUnit";
+	  }else if(type.equals("Attribute")){
+		  nType = "code:StorableUnit";
+	  }
+	try {
+		data = new FileInputStream(ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\Resources\\output.txt");
+		DataInputStream in = new DataInputStream(data);
+		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		String strLine;
+		br.readLine();
+		while((strLine = br.readLine()) != null){
+			String [] tokens = strLine.split(" ");
+			if(tokens[0].equalsIgnoreCase(nType) && tokens[1].equalsIgnoreCase(name)){
+				nLine = Integer.parseInt(tokens[2]);
+			}
+		}
+		br.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	  
+	  return nLine;
+  }
+  public static void navigateToLine(IFile file, Integer line, IWorkbenchPage page)
+  {
+      HashMap<String, Object> map = new HashMap<String, Object>();
+      map.put(IMarker.LINE_NUMBER, line);
+      IMarker marker = null;
+      try {
+          marker = file.createMarker(IMarker.TEXT);
+          marker.setAttributes(map);
+          try {
+              IDE.openEditor(page, marker);
+          } catch ( PartInitException e ) {
+              //complain
+          }
+      } catch ( CoreException e1 ) {
+          //complain
+      } finally {
+          try {
+              if (marker != null)
+                  marker.delete();
+          } catch ( CoreException e ) {
+              //whatever
+          }
+      }
+  }
   private Object createLazyTreeModelFrom(String xmlFilePath) {
       Node documentNode = null;
       try {

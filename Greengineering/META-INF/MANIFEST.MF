@@ -30,3 +30,5 @@ Bundle-ClassPath: lib/dom4j-1.6.1.jar,
  lib/jdom-2.0.6-junit.jar,
  lib/jdom-2.0.6-sources.jar,
  lib/jdom-2.0.6.jar
+Import-Package: org.eclipse.core.filesystem,
+ org.eclipse.jface.text

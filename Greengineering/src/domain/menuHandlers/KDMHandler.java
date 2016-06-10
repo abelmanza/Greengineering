@@ -18,6 +18,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import domain.kdm.*;
 import domain.transformationm2m.*;
 import persistence.DataManagement;
+import persistence.ParserManagement;
 
 public class KDMHandler extends AbstractHandler {
 	private IStructuredSelection selection=null;
@@ -47,18 +48,20 @@ public class KDMHandler extends AbstractHandler {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		
 		//IProject insideProject = newProject.getFolder("Legacy System").getFolder(name)
 		
 		try {
-			JavaToKDMModel.javatoKDMM(insideProject,ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Grey KDM\\LS_KDMModel.xmi");
-			File xmlFile = new File(ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Grey KDM\\LS_KDMModel.xmi");
+			JavaToKDMModel.javatoKDMM(insideProject,ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Source KDM\\LS_KDMModel.xmi");
+			File xmlFile = new File(ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Source KDM\\LS_KDMModel.xmi");
 			AddExtensionFamily.crearExtensionFamily(xmlFile, nameProject);
 			DataManagement.getInstance().refreshProject(nameProject);
+			String path = ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Legacy System";
+			ParserManagement.collectProjectData(path);
 		} catch (DiscoveryException | CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return null;
 	}
 

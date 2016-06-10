@@ -2,8 +2,7 @@
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:action="http://www.eclipse.org/MoDisco/kdm/action" xmlns:code="http://www.eclipse.org/MoDisco/kdm/code" xmlns:kdm="http://www.eclipse.org/MoDisco/kdm/kdm" xmlns:source="http://www.eclipse.org/MoDisco/kdm/source">
   <kdm:Segment>
     <extension name="Example extensions">
-      <stereotype xmi:id="id.1" name="Checked Method"/>
-      <stereotype xmi:id="id.2" name="Check God Class"/>
+      <stereotype xmi:id="id.1" name="Checked"/>
     </extension>
     <model xsi:type="code:CodeModel" name="PruebaATL">
       <codeElement xsi:type="code:Package" name="(default package)">

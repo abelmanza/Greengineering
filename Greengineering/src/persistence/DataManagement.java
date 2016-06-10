@@ -32,7 +32,7 @@ public class DataManagement {
 		ArrayList<File> files= new ArrayList<File>();
 			
 		/*Se cargan todos los archivos*/
-		files= getAllFiles(pathSourceFolder,"*");
+		files= getAllFiles(pathSourceFolder,".java");
 				
 		if(files.size()!=0){
 			String newPathFolder=pathDestinationFolder+File.separator+folder.getName();

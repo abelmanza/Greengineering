@@ -1,8 +1,12 @@
 package domain.transformationm2m;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -144,6 +148,99 @@ public class ModelClean {
 		}
 		
         return f;
+	}
+	
+	public static void addNumberLine(File xmlFile, String filePath, String exitPath){
+		
+		SAXBuilder builder = new SAXBuilder();
+		Document document;
+		try {
+			
+			FileInputStream f = new FileInputStream(filePath);
+			DataInputStream in = new DataInputStream(f);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String strLine;
+			br.readLine();
+			
+			document = (Document) builder.build( xmlFile );
+			Element rootNode = document.getRootElement();
+			System.out.println(rootNode);
+			Namespace xsi = Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+			
+			List list = rootNode.getChildren();
+			while((strLine = br.readLine()) != null){
+				String [] tokens = strLine.split(" ");
+				for(int i = 0; i<list.size(); i++){
+					Element element = (Element) list.get(i);
+					if(element.getChildren().size()>0){
+						List list1 = element.getChildren();
+						
+						for(int j = 0; j<list1.size(); j++){
+							Element element1 = (Element) list1.get(j);
+							if(element1.getChildren().size()>0){
+								List list2 = element1.getChildren();
+								
+								for(int k = 0; k<list2.size(); k++){
+									Element element2 = (Element) list2.get(k);
+									if(element2.getChildren().size()>0){
+										List list3 = element2.getChildren();
+										
+										for(int l = 0; l<list3.size(); l++){
+											Element elementClass = (Element) list3.get(l);
+											if(elementClass.hasAttributes()){
+												
+												if(elementClass.getAttributeValue("type",xsi)!= null && elementClass.getAttributeValue("type",xsi).equals("code:ClassUnit")){
+													if(elementClass.getAttributeValue("type",xsi).equals(tokens[0]) && elementClass.getAttributeValue("name").equals(tokens[1])){
+														elementClass.setAttribute(new Attribute("beginLine", tokens[2]));
+													}
+													
+													if(elementClass.getChildren().size()>0){
+														List listMethod = elementClass.getChildren();
+														
+														if(listMethod.size()>0){
+															for(int m = 0; m<listMethod.size();m++){
+																Element elementMethod = (Element) listMethod.get(m);
+																String type = elementMethod.getAttributeValue("type", xsi);
+																if(elementMethod.getAttributeValue("type",xsi)!= null && elementMethod.getAttributeValue("type",xsi).equals(tokens[0]) && elementMethod.getAttributeValue("name").equals(tokens[1])){
+																	elementMethod.setAttribute(new Attribute("beginLine", tokens[2]));
+																}
+															}
+															
+														}
+													}
+											
+												}
+											}
+								
+										}
+									}
+									
+								}
+							}
+							
+						}
+					}
+					
+				}
+			}
+			
+			
+			
+			XMLOutputter xmlOutput = new XMLOutputter();
+			Format format = Format.getPrettyFormat();
+			format.setEncoding("iso-8859-1");
+	        // display ml
+	        xmlOutput.setFormat(format);
+	        xmlOutput.output(document, new FileWriter(exitPath));
+			
+			
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 
