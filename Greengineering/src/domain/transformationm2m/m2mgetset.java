@@ -32,7 +32,6 @@ import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher;
 
 public class m2mgetset {
 	public static void doTransformation(){	
-		//lazyMetamodelRegistration(ResourcesPlugin.getWorkspace().getRoot().getLocation()+"/EjemploTrasgit/KDMmetamodelecore.ecore");
 		try{
 			
 			/*

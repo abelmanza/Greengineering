@@ -48,7 +48,7 @@ public class KDMHandler extends AbstractHandler {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		//IProject insideProject = newProject.getFolder("Legacy System").getFolder(name)
+		
 		
 		try {
 			JavaToKDMModel.javatoKDMM(insideProject,ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\"+nameProject+"\\Source KDM\\LS_KDMModel.xmi");

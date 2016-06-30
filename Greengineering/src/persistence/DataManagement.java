@@ -27,12 +27,38 @@ public class DataManagement {
 	public void loadFolder(String pathSourceFolder, String pathDestinationFolder) throws IOException, CoreException {
 		// TODO Auto-generated method stub
 		
-		File folder=new File(pathSourceFolder); //carpeta que queremos cargar
+		File folder=new File(pathSourceFolder); 
 		
 		ArrayList<File> files= new ArrayList<File>();
 			
-		/*Se cargan todos los archivos*/
+		
 		files= getAllFiles(pathSourceFolder,".java");
+				
+		if(files.size()!=0){
+			String newPathFolder=pathDestinationFolder+File.separator+folder.getName();
+			File newFolder=new File(newPathFolder);
+			newFolder.mkdir();
+			for(File f:files){
+				if(f.isFile()){
+					loadFile(f.getPath(),newPathFolder);
+				}
+				if(f.isDirectory()){
+					loadFolder(f.getPath(),newPathFolder);
+				}
+			}
+		}
+
+	}
+	
+	public void loadFragmentFolder(String pathSourceFolder, String pathDestinationFolder) throws IOException, CoreException {
+		// TODO Auto-generated method stub
+		
+		File folder=new File(pathSourceFolder); 
+		
+		ArrayList<File> files= new ArrayList<File>();
+			
+		
+		files= getAllFiles(pathSourceFolder,"*");
 				
 		if(files.size()!=0){
 			String newPathFolder=pathDestinationFolder+File.separator+folder.getName();
@@ -53,8 +79,7 @@ public class DataManagement {
 	public ArrayList<File> getAllFiles(String path, String extension) {
 		ArrayList<File> listaArchivos = new ArrayList<File>();
 		File file=new File(path);
-		/*Añadimos los archivos .java de esa carpeta y 
-		 * las carpetas que haya dentro de esa carpeta*/
+		
 		if (file.isDirectory()){
 			File[] files=file.listFiles();
 			if(extension!="*"){
@@ -75,10 +100,10 @@ public class DataManagement {
 	public void loadFile(String pathSourceFile, String pathDestinationFolder) throws IOException, CoreException{
 		File file=new File(pathSourceFile);
 		String pathNewFile=pathDestinationFolder+File.separator+file.getName();
-		/*Se crea un archivo vacio en esa ruta*/
+		
 		File newFile = new File (pathNewFile);
 		newFile.createNewFile();
-		/*Se hace una copia del archivo a ese archivo vacio nuevo*/
+		
 		fileCopy(file.getPath(),newFile.getPath());
 	}
 	
@@ -106,7 +131,7 @@ public class DataManagement {
 	public void refreshProject(String nameProject) throws CoreException{
 		
 		IProject newProject = ResourcesPlugin.getWorkspace().getRoot().getProject(nameProject);
-		/*Actualizar*/
+		
 		newProject.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 	}
 	

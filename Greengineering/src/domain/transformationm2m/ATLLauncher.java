@@ -46,32 +46,18 @@ public class ATLLauncher {
 		String TRANSFORMATION_DIR = "file:///"+ResourcesPlugin.getWorkspace().getRoot().getLocation()+"/Resources/transformations/";
 		String TRANSFORMATION_MODULE= "MarcarModelo";
 		
-		/* 
-		 * Creates the execution environment where the transformation is going to be executed,
-		 * you could use an execution pool if you want to run multiple transformations in parallel,
-		 * but for the purpose of the example let's keep it simple.
-		 */
+
 		ExecEnv env = EmftvmFactory.eINSTANCE.createExecEnv();
 		ResourceSet rs = new ResourceSetImpl();
 		System.out.println(IN_MODEL);
 		System.out.println(TRANSFORMATION_DIR);
 
-		/*
-		 * Load meta-models in the resource set we just created, the idea here is to make the meta-models
-		 * available in the context of the execution environment, the ResourceSet is later passed to the
-		 * ModuleResolver that is the actual class that will run the transformation.
-		 * Notice that we use the nsUris to locate the metamodels in the package registry, we initialize them 
-		 * from Ecore files that we registered lazily as shown below in e.g. registerInputMetamodel(...) 
-		 */
+
 		Metamodel metamodel = EmftvmFactory.eINSTANCE.createMetamodel();
 		metamodel.setResource(CodePackage.eINSTANCE.eResource());
 		env.registerMetaModel(IN_METAMODEL_NAME, metamodel);
 		
-		/*
-		 * Create and register resource factories to read/parse .xmi and .emftvm files,
-		 * we need an .xmi parser because our in/output models are .xmi and our transformations are
-		 * compiled using the ATL-EMFTV compiler that generates .emftvm files
-		 */
+
 		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
 		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMLResourceFactoryImpl());
 		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emftvm", new EMFTVMResourceFactoryImpl());
@@ -82,11 +68,7 @@ public class ATLLauncher {
 		inOutModel.setResource(rs.getResource(URI.createURI(IN_MODEL, true), true));
 		env.registerInOutModel("IN", inOutModel);
 		
-		/*
-		 *  Load and run the transformation module
-		 *  Point at the directory your transformations are stored, the ModuleResolver will 
-		 *  look for the .emftvm file corresponding to the module you want to load and run
-		 */
+	
 		
 		ModuleResolver mr = new DefaultModuleResolver(TRANSFORMATION_DIR, rs);
 
@@ -105,13 +87,7 @@ public class ATLLauncher {
 		}
 	}
 	
-	/*
-	 * I seriously hate relying on the eclipse facilities, and if you're not building an eclipse plugin
-	 * you can't rely on eclipse's registry (let's say you're building a stand-alone tool that needs to run ATL
-	 * transformation, you need to 'manually' register your metamodels) 
-	 * This method does two things, it initializes an Ecore parser and then programmatically looks for
-	 * the package definition on it, obtains the NsUri and registers it.
-	 */
+
 	private String lazyMetamodelRegistration(String metamodelPath){
 		
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
@@ -133,13 +109,7 @@ public class ATLLauncher {
 	    return null;
 	}
 	
-	/*
-	 * As shown above we need the inputMetamodelNsURI and the outputMetamodelNsURI to create the context of
-	 * the transformation, so we simply use the return value of lazyMetamodelRegistration to store them.
-	 * -- Notice that the lazyMetamodelRegistration(..) implementation may return null in case it doesn't 
-	 * find a package in the given metamodel, so watch out for malformed metamodels.
-	 * 
-	 */
+
 	public void registerInputMetamodel(String inputMetamodelPath){	
 		inputMetamodelNsURI = lazyMetamodelRegistration(inputMetamodelPath);
 		System.out.println("Meu Input " + inputMetamodelNsURI);
@@ -150,10 +120,7 @@ public class ATLLauncher {
 		System.out.println("Meu output " + outputMetamodelNsURI);
 	}
 	
-	/*
-	 *  A test main method, I'm using constants so I can quickly change the case study by simply
-	 *  modifying the header of the class.
-	 */	
+
 	public static void doTransformation(String nameProject){
 		ATLLauncher l = new ATLLauncher();
 		l.launch(nameProject);

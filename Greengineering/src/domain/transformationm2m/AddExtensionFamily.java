@@ -103,7 +103,6 @@ public class AddExtensionFamily {
 		//Stereotype 1
 		Element stereotype = new Element("stereotype");
 		stereotype.addNamespaceDeclaration(xmi);
-		//extensionFamily.addNamespaceDeclaration(kdm);
 		stereotype.setAttribute(new Attribute("name","Checked Method"));
 		stereotype.setAttribute("id", "id.4", xmi);
 		

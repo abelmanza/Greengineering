@@ -49,7 +49,6 @@ public class NewProjectWizard extends Wizard implements INewWizard, IExecutableE
 	@Override
 	public void addPages() {
 	    super.addPages();
-	   // _pageTwo = new WizardExternalProjectImportPage();
 	    _pageOne = new WizardNewProjectCreationPage("From Scratch Project Wizard");
 	    _pageOne.setTitle("New Greengineering Project");
 	    _pageOne.setDescription("Create a greengineering folder structure.");

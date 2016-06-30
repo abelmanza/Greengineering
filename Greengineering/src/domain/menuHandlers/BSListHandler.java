@@ -26,23 +26,6 @@ public class BSListHandler extends AbstractHandler{
 	}
 	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		/*IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-		
-		//m2mgetset.doTransformation();
-		//pruebaTransformacion.launchTransformation();
-		
-		ISelection sel = HandlerUtil.getCurrentSelection(event);
-		selection = (IStructuredSelection) sel;
-		nameProject=DataManagement.getNameProject(selection.getFirstElement());
-		
-		ATLLauncher.doTransformation(nameProject);
-		
-		try {
-			DataManagement.getInstance().refreshProject(nameProject);
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		
 		BSManagement bsm = new BSManagement();
 		bsm.open();

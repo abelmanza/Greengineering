@@ -84,7 +84,7 @@ public class ImportBS {
 				targetdir = targetdir.substring(6);
 				System.out.println(targetdir);
 				try {
-					DataManagement.getInstance().loadFolder(plugdir,targetdir);
+					DataManagement.getInstance().loadFragmentFolder(plugdir,targetdir);
 				} catch (IllegalStateException | IOException | CoreException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

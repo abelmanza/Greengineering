@@ -97,11 +97,6 @@ public class ParserManagement {
 		
 	}
 	
-	public static void main (String [] args){
-		collectProjectData("D://Usuarios//Abel//Descargas//ejemplos");
-		//ModelClean.addNumberLine(xmlFile, "D://Usuarios//Abel//Descargas//ejemplos//output.txt", "D://Usuarios//Abel//Descargas//ejemplos//conlinea.txt");
-		//fileToXML("D://Usuarios//Abel//Descargas//ejemplos//output.txt");
-		
-	}
+	
 
 }

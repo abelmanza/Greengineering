@@ -163,5 +163,17 @@
             file="contexts.xml">
       </contexts>
    </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="Greengineering 1.0">
+         <property
+               name="appName"
+               value="Greengineering 1.0">
+         </property>
+      </product>
+   </extension>
 
 </plugin>

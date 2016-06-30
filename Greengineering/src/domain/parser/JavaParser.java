@@ -122,11 +122,8 @@ public class JavaParser implements JavaParserConstants {
  * Main entry point for parsing java files.
  */
   public void writeFile(String nameFile, ArrayList <String> array){
-	  File fich = new File(ResourcesPlugin.getWorkspace().getRoot().getLocation()+"\\Resources\\output.txt");
 	  try {
-		if(fich.exists()){
-			fich.delete();
-		}
+
 		FileWriter writer = new FileWriter(nameFile, true);
 		int c = 0;
 		writer.write("\n");
